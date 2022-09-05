@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import store from "./../store/index.js";
 
 import CoachDetail from "./../views/coaches/CoachDetail.vue";
 import CoachesList from "./../views/coaches/CoachesList.vue";
@@ -20,7 +21,14 @@ const router = createRouter({
                 { path: "contact", component: ContactCoach }, // /coaches/c1/contact
             ],
         },
-        { path: "/register", component: CoachRegistation },
+        {
+            path: "/register",
+            component: CoachRegistation,
+            beforeEnter(to, _2, next) {
+                if (store.getters["coaches/isCoach"]) next("/");
+                next();
+            },
+        },
         { path: "/requests", component: RequestsReceived },
         { path: "/:notFound(.*)", component: NotFound },
     ],
