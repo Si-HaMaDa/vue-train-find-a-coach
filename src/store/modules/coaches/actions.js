@@ -10,7 +10,9 @@ export default {
         };
 
         const response = await fetch(
-            `${import.meta.env.VITE_FB_DB_API_ENDPOINT}/coaches/${userId}.json`,
+            `${
+                import.meta.env.VITE_FB_DB_API_ENDPOINT
+            }/coaches/${userId}.json?auth=${context.rootGetters.token}`,
             {
                 method: "PUT",
                 body: JSON.stringify(coachData),

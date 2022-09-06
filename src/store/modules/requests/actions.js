@@ -29,7 +29,7 @@ export default {
     async fetchRequests(context) {
         const coachId = context.rootGetters.userId;
         const response = await fetch(
-            `https://vue-train-rating-server-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json`
+            `https://vue-train-rating-server-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json?auth=${context.rootGetters.token}`
         );
         const responseData = await response.json();
 
