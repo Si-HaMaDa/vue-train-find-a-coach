@@ -10,7 +10,7 @@ export default {
         };
 
         const response = await fetch(
-            `https://vue-train-rating-server-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+            `${import.meta.env.VITE_FB_DB_API_ENDPOINT}/coaches/${userId}.json`,
             {
                 method: "PUT",
                 body: JSON.stringify(coachData),
@@ -37,7 +37,7 @@ export default {
         }
 
         const response = await fetch(
-            `https://vue-train-rating-server-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
+            `${import.meta.env.VITE_FB_DB_API_ENDPOINT}/coaches.json`
         );
         const responseData = await response.json();
 
