@@ -14,6 +14,31 @@ export default {
     components: {
         TheHeader,
     },
+    created() {
+        this.$store.dispatch("tryLogin");
+    },
+    computed: {
+        isAuthed() {
+            return this.$store.getters.isAuthed;
+        },
+    },
+    watch: {
+        isAuthed() {
+            console.log(this.isAuthed);
+            console.log(this.$route.meta);
+            if (
+                this.$route.meta.requiresAuth &&
+                !this.$store.getters.isAuthed
+            ) {
+                this.$router.push("/auth");
+            } else if (
+                this.$route.meta.requiresUnauth &&
+                this.$store.getters.isAuthed
+            ) {
+                this.$router.push("/coaches");
+            }
+        },
+    },
 };
 </script>
 

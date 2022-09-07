@@ -25,15 +25,26 @@ const router = createRouter({
         {
             path: "/register",
             component: CoachRegistation,
-            beforeEnter(to, _2, next) {
-                if (store.getters["coaches/isCoach"]) next("/");
-                next();
-            },
+            meta: { requiresAuth: true },
         },
-        { path: "/requests", component: RequestsReceived },
-        { path: "/auth", component: UserAuth },
+        {
+            path: "/requests",
+            component: RequestsReceived,
+            meta: { requiresAuth: true },
+        },
+        { path: "/auth", component: UserAuth, meta: { requiresUnauth: true } },
         { path: "/:notFound(.*)", component: NotFound },
     ],
+});
+
+router.beforeEach(function (to, _, next) {
+    if (to.meta.requiresAuth && !store.getters.isAuthed) {
+        next("/auth");
+    } else if (to.meta.requiresUnauth && store.getters.isAuthed) {
+        next("/coaches");
+    } else {
+        next();
+    }
 });
 
 export default router;
