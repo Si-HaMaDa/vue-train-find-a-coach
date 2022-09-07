@@ -24,8 +24,6 @@ export default {
     },
     watch: {
         isAuthed() {
-            console.log(this.isAuthed);
-            console.log(this.$route.meta);
             if (
                 this.$route.meta.requiresAuth &&
                 !this.$store.getters.isAuthed

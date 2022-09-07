@@ -1,39 +1,45 @@
 import { createRouter, createWebHistory } from "vue-router";
 import store from "./../store/index.js";
 
-import CoachDetail from "./../views/coaches/CoachDetail.vue";
-import CoachesList from "./../views/coaches/CoachesList.vue";
-import CoachRegistation from "./../views/coaches/CoachRegistration.vue";
-import ContactCoach from "./../views/requests/ContactCoach.vue";
-import RequestsReceived from "./../views/requests/RequestsReceived.vue";
-import NotFound from "./../views/NotFound.vue";
-import UserAuth from "./../views/auth/UserAuth.vue";
-
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         { path: "/", redirect: "/coaches" },
-        { path: "/coaches", component: CoachesList },
+        {
+            path: "/coaches",
+            component: () => import("./../views/coaches/CoachesList.vue"),
+        },
         {
             path: "/coaches/:id",
-            component: CoachDetail,
+            component: () => import("./../views/coaches/CoachDetail.vue"),
             props: true,
             children: [
-                { path: "contact", component: ContactCoach }, // /coaches/c1/contact
+                {
+                    path: "contact",
+                    component: () =>
+                        import("./../views/requests/ContactCoach.vue"),
+                }, // /coaches/c1/contact
             ],
         },
         {
             path: "/register",
-            component: CoachRegistation,
+            component: () => import("./../views/coaches/CoachRegistration.vue"),
             meta: { requiresAuth: true },
         },
         {
             path: "/requests",
-            component: RequestsReceived,
+            component: () => import("./../views/requests/RequestsReceived.vue"),
             meta: { requiresAuth: true },
         },
-        { path: "/auth", component: UserAuth, meta: { requiresUnauth: true } },
-        { path: "/:notFound(.*)", component: NotFound },
+        {
+            path: "/auth",
+            component: () => import("./../views/auth/UserAuth.vue"),
+            meta: { requiresUnauth: true },
+        },
+        {
+            path: "/:notFound(.*)",
+            component: () => import("./../views/NotFound.vue"),
+        },
     ],
 });
 
