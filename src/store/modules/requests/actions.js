@@ -5,7 +5,7 @@ export default {
             message: payload.message,
         };
         const response = await fetch(
-            `https://vue-train-rating-server-default-rtdb.europe-west1.firebasedatabase.app/requests/${payload.coachId}.json`,
+            `${import.meta.env.VITE_FB_DB_API_ENDPOINT}/requests/${payload.coachId}.json`,
             {
                 method: "POST",
                 body: JSON.stringify(newRequest),
@@ -29,7 +29,7 @@ export default {
     async fetchRequests(context) {
         const coachId = context.rootGetters.userId;
         const response = await fetch(
-            `https://vue-train-rating-server-default-rtdb.europe-west1.firebasedatabase.app/requests/${coachId}.json?auth=${context.rootGetters.token}`
+            `${import.meta.env.VITE_FB_DB_API_ENDPOINT}/requests/${coachId}.json?auth=${context.rootGetters.token}`
         );
         const responseData = await response.json();
 
